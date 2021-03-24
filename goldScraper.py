@@ -208,11 +208,15 @@ for key in tqdm(subjectCodes):
     # returns to Find Courses Page
     currentPage = session.get(url)
 print("Done.")
-print("Printing database")
-print("in form ['databaseID', 'courseCode', 'courseNumber', 'daysSincePass', 'passNumber', 'fullStatus', 'quarterID']...")
-time.sleep(10)
 
-printAll()
+x = input("Would you like to view the database? (y/n) ")
+
+if(x == 'y'):
+    print("Printing database")
+    print("in form ['databaseID', 'courseCode', 'courseNumber', 'daysSincePass', 'passNumber', 'fullStatus', 'quarterID']...")
+    time.sleep(10)
+
+    printAll()
 
 
 
