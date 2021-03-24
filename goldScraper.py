@@ -6,8 +6,11 @@ import time # for execution time tests
 import requests
 from bs4 import BeautifulSoup
 from courseCodes import *
+from tqdm import tqdm # for progress bar
+
 
 # set up session
+print("Getting pass times")
 session = requests.Session()
 url = 'https://registrar.sa.ucsb.edu/calendars/calendars-deadlines/registration-pass-dates/'
 currentPage = session.get(url)
@@ -59,7 +62,7 @@ for qID in range(1,4):
 
 
 
-
+print("Logging in to GOLD")
 
 payload = {
     "__VIEWSTATE": "",
@@ -89,9 +92,11 @@ payload['__EVENTVALIDATION'] = soup.find(id="__EVENTVALIDATION")["value"]
 currentPage = session.post(url, payload)
 soup = BeautifulSoup(currentPage.content, 'html.parser')
 
-# catches bad login  data
+# catches bad login data
 if soup.find(string="Announcements") == None:
     sys.exit("Bad password/username")
+else:
+    print("Login successful!")
 
 # updates url to Find Courses page
 url = "https://my.sa.ucsb.edu/gold/BasicFindCourses.aspx"
@@ -124,7 +129,8 @@ courseName = ""
 courseNumber = ''
 
 # iterates over subjects
-for key in subjectCodes:
+print("Scanning all courses for incoming quarter...")
+for key in tqdm(subjectCodes):
     soup = BeautifulSoup(currentPage.content, 'html.parser')
 
     # sets payload variables
@@ -201,9 +207,12 @@ for key in subjectCodes:
     
     # returns to Find Courses Page
     currentPage = session.get(url)
-    
+print("Done.")
+print("Printing database")
+print("in form ['databaseID', 'courseCode', 'courseNumber', 'daysSincePass', 'passNumber', 'fullStatus', 'quarterID']...")
+time.sleep(10)
 
-#printAll()
+printAll()
 
 
 

@@ -1,3 +1,3 @@
 password = "XXXXXXXXXXXX"
 username = "XXXXXXXXXXXX"
-database = "XXXXXXXXXXXX"
+database = "XXXXXXXXXXXX.db"
